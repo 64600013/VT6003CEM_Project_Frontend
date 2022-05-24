@@ -79,23 +79,23 @@ export default function CheckDogs() {
                         <br/>
                         <Form.Group className="mb-3" controlId="formBasicId">
                             <Form.Label>Dog ID</Form.Label>
-                            <Form.Control onChange={(e)=>handleTwo(e)} id="id" value={data.id} placeholder="Dog ID" type="text" />
+                            <Form.Control onChange={(e)=>handleTwo(e)} id="id" value={data[0]?.id} placeholder="Dog ID" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicName">
                             <Form.Label>Dog Name</Form.Label>
-                            <Form.Control onChange={(e)=>handleTwo(e)} id="name" value={data.name} placeholder="Dog Name" type="text" />
+                            <Form.Control onChange={(e)=>handleTwo(e)} id="name" value={data[0]?.name} placeholder="Dog Name" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicAge">
                             <Form.Label>Dog Age</Form.Label>
-                            <Form.Control onChange={(e)=>handleTwo(e)} id="age" value={data.age} placeholder="Dog Age" type="text" />
+                            <Form.Control onChange={(e)=>handleTwo(e)} id="age" value={data[0]?.age} placeholder="Dog Age" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicSex">
                             <Form.Label>Dog Sex</Form.Label>
-                            <Form.Control onChange={(e)=>handleTwo(e)} id="sex" value={data.sex} placeholder="Dog Sex" type="text" />
+                            <Form.Control onChange={(e)=>handleTwo(e)} id="sex" value={data[0]?.sex} placeholder="Dog Sex" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicBreed">
                             <Form.Label>Dog Breed</Form.Label>
-                            <Form.Control onChange={(e)=>handleTwo(e)} id="breed" value={data.breed} placeholder="Dog Breed" type="text" />
+                            <Form.Control onChange={(e)=>handleTwo(e)} id="breed" value={data[0]?.breed} placeholder="Dog Breed" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicImage">
                             <Form.Label>Image Link</Form.Label>
