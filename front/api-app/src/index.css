@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  font-family: sans-serif, Helvetica, Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #d6d6d6;
+}
+
+code {
+  font-family: sans-serif, Helvetica, Arial;
+}
