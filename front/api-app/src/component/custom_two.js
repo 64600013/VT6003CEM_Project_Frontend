@@ -23,6 +23,11 @@ export default function CustomCardTwo({ dogImg, name, sex, age, breed}) {
                                 Age: {age}
                             </Card.Text>
                         </Col>
+                        <Col>
+                            <Card.Text>
+                                Breed: {breed}
+                            </Card.Text>
+                        </Col>
                     </Row>
                 </Card.Body>
             </Card>

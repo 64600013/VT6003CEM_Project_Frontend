@@ -10,6 +10,7 @@ import Home from '../page/home';
 import Login from '../page/login';
 import Register from '../page/register';
 import LoginPage from '../page/loginPage';
+import CheckDogs from '../page/checkDogs';
 
 
 
@@ -28,6 +29,7 @@ export default function Header() {
 
                             </Nav>
                             <Nav>
+                                <Nav.Link as={Link} to="/checkDogs">Check Dogs</Nav.Link>
                                 <Nav.Link as={Link} to="/loginPage">Employee</Nav.Link>
                                 <Nav.Link as={Link} to="/login">Login</Nav.Link>
                                 <Nav.Link as={Link} to="/Register">Register</Nav.Link>
@@ -41,6 +43,7 @@ export default function Header() {
                         <Route path='/login' element={<Login />}></Route>
                         <Route path='/register' element={<Register />}></Route>
                         <Route path='/loginPage' element={<LoginPage />}></Route>
+                        <Route path='/checkDogs' element={<CheckDogs />}></Route>
                     </Routes>
                 </div>
             </div>
