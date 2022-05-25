@@ -49,8 +49,8 @@ export default function CheckDogs() {
             image: dataTwo.image},{
             headers: headerTwo
         }).then(res => {
-            console.log(res.dataTwo)
-            if (res.dataTwo !== "undefined"){ 
+            alert(res.data)
+            if (res.data !== "undefined"){ 
                 console.log('yes')
             }
         })
