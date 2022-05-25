@@ -6,10 +6,10 @@ import React, { useState } from 'react'
 
 
 export default function CheckDogs() {
-    const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", image: ""})
-    const [dataTwo, setDataTwo] = useState({id: "", name: "", age: "", sex: "", breed: "", image: ""})
-    const url = "http://localhost:5000/dog/" + data.id
-    const urlTwo = "http://localhost:5000/dog/" + dataTwo.id
+    const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+    const [dataTwo, setDataTwo] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+    const url = "http://localhost:4000/worker/dog/" + data.id
+    const urlTwo = "http://localhost:4000/dog/" + dataTwo.id
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
     //console.log(token)
     const header = {
@@ -45,6 +45,7 @@ export default function CheckDogs() {
             age: dataTwo.age, 
             sex: dataTwo.sex, 
             breed: dataTwo.breed, 
+            location: dataTwo.location, 
             image: dataTwo.image},{
             headers: headerTwo
         }).then(res => {
@@ -107,6 +108,10 @@ export default function CheckDogs() {
                         <Form.Group className="mb-3" controlId="formBasicBreed">
                             <Form.Label>Dog Breed</Form.Label>
                             <Form.Control onClick={(e)=>handleTwo(e)} id="breed" defaultValue={data[0]?.breed} placeholder="Dog Breed" type="text" />
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formBasicLocation">
+                            <Form.Label>Dog Location</Form.Label>
+                            <Form.Control onClick={(e)=>handleTwo(e)} id="location" defaultValue={data[0]?.location} placeholder="Dog Location" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicImage">
                             <Form.Label>Image Link</Form.Label>

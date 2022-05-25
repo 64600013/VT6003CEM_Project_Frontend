@@ -7,52 +7,50 @@ import CustomCard from '../component/custom_card.js';
 import Row from 'react-bootstrap/Row';
 import dogdefault from '../images/dog01.jpg';
 
-export default function DeleteDogs() {
+export default function SearchDogs() {
     const [dogDataList, setDogDataList] = useState({})
-    const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
-    const url = "http://localhost:4000/dog/" + data.id
-    const urlTwo = "http://localhost:4000/worker/dog/" + data.id
+    const [data, setData] = useState({ breed: "", location:""})
+    const url = "http://localhost:4000/dog/breed/" + data.breed
+    const urlTwo = "http://localhost:4000/dog/age/" + data.age
+    const urlThree = "http://localhost:4000/dog/location/" + data.location
 
-    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
-    //console.log(token)
-    const headerTwo = {
-        'Authorization': tokenTwo
-    } 
+    // const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
+    // //console.log(token)
+    // const headerTwo = {
+    //     'Authorization': tokenTwo
+    // } 
 
     function submit(e){
         e.preventDefault();
-        console.log(headerTwo)
-        Axios.get(urlTwo,{ id: data.id, headers: headerTwo
+        Axios.get(url,{ breed: data.breed
         }).then(res => {
-            console.log(res.dataTwo)
             setDogDataList(res.data)
-            if (res.dataTwo !== "undefined"){ 
-                console.log('yes')
-            }
-        })
-        
-    }
-
-    function submitTwo(e){
-        e.preventDefault();
-        console.log(data.id)
-        Axios.delete(url,{id: data.id, headers: headerTwo}).then(res => {
-            //setData(res.data)
-            console.log(data)
-            alert(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
-        })
-        Axios.get(urlTwo,{ id: data.id, headers: headerTwo
+        }) 
+    }
+    function submitTwo(e){
+        e.preventDefault();
+        Axios.get(urlTwo,{ age: data.age
         }).then(res => {
-            console.log(res.dataTwo)
             setDogDataList(res.data)
-            if (res.dataTwo !== "undefined"){ 
+            if (res.data !== "undefined"){ 
                 console.log('yes')
             }
-        })
+        }) 
     }
+    function submitThree(e){
+        e.preventDefault();
+        Axios.get(urlThree,{ location: data.location
+        }).then(res => {
+            setDogDataList(res.data)
+            if (res.data !== "undefined"){ 
+                console.log('yes')
+            }
+        }) 
+    }
+
 
     function handle(e){
         const newdata={...data}
@@ -67,9 +65,27 @@ export default function DeleteDogs() {
             <Card>
                 <Card.Body>
                     <Form onSubmit={(e)=>submit(e)}>
-                        <Form.Group className="mb-3" controlId="formBasicId">
-                            <Form.Label>Dog ID</Form.Label>
-                            <Form.Control onChange={(e)=>handle(e)} id="id" value={data.id} placeholder="Dog ID" type="text" />
+                        <Form.Group className="mb-3" controlId="formBasicBreed">
+                            <Form.Label>Dog Breed</Form.Label>
+                            <Form.Control onChange={(e)=>handle(e)} id="breed" defaultValue={data.breed} placeholder="Dog Breed" type="text" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Search
+                        </Button>
+                    </Form>
+                    <Form onSubmit={(e)=>submitTwo(e)}>
+                        <Form.Group className="mb-3" controlId="formBasicAge">
+                            <Form.Label>Dog Age</Form.Label>
+                            <Form.Control onChange={(e)=>handle(e)} id="age" defaultValue={data.age} placeholder="Dog Age" type="text" />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Search
+                        </Button>
+                    </Form>
+                    <Form onSubmit={(e)=>submitThree(e)}>
+                        <Form.Group className="mb-3" controlId="formBasicLocation">
+                            <Form.Label>Dog Location</Form.Label>
+                            <Form.Control onChange={(e)=>handle(e)} id="location" defaultValue={data.location} placeholder="Dog Location" type="text" />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Search
@@ -91,14 +107,7 @@ export default function DeleteDogs() {
                         ))}
                     </Row>
                     <br/><br/><br/>
-                    <Form onSubmit={(e)=>submitTwo(e)}>
-                        <Form.Group className="mb-3" controlId="formBasicId">
-                            <Form.Control onClick={(e)=>handle(e)} id="id" value={data.id} placeholder="Dog ID" type="hidden" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Confirm Delete
-                        </Button>
-                    </Form>
+                    
                 </Card.Body>
             </Card>
         </div>

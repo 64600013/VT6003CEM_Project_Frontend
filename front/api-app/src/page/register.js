@@ -10,7 +10,7 @@ import React, { useState } from 'react'
 import register from '../images/register.png';
 
 export default function Register() {
-    const url = "http://localhost:5000/worker";
+    const url = "http://localhost:4000/worker";
     const [data, setData] = useState({name: "", age: "", sex: "", email: "", password: "", signup_code: ""})
 
     function submit(e){

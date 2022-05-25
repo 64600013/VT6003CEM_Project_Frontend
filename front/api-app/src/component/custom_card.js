@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
-export default function CustomCard({ dogImg, name, sex, age, breed}) {
+export default function CustomCard({ dogImg, name, sex, age, breed, location}) {
     
     return (
         
@@ -31,6 +31,14 @@ export default function CustomCard({ dogImg, name, sex, age, breed}) {
                         <Col>
                             <Card.Text>
                                 Breed: {breed}
+                            </Card.Text>
+                            
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Card.Text>
+                                Location: {location}
                             </Card.Text>
                         </Col>
                     </Row>

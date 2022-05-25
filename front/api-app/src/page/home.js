@@ -17,7 +17,7 @@ export default function Home() {
     const [dogDataList, setDogDataList] = useState({})
 
     useEffect(() => {
-        axios.get('http://localhost:5000/dog')
+        axios.get('http://localhost:4000/dog')
             .then(res => {
                 setDogDataList(res.data)
             }).catch(err => {
@@ -42,7 +42,8 @@ export default function Home() {
                                 dogImg={dogDataList[index]?.image || dogdefault}
                                 sex={dogDataList[index]?.sex || "Not Available"}
                                 age={dogDataList[index]?.age || "Not Available"}
-                                breed={dogDataList[index]?.breed || "Not Available"}>
+                                breed={dogDataList[index]?.breed || "Not Available"}
+                                location={dogDataList[index]?.location || "Not Available"}>
                             </CustomCard>
                         </div>
                     ))}

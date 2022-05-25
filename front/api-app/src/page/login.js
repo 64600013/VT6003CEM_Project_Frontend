@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import user from '../images/login-icon.png';
 
 export default function Login() {
-  const url = "http://localhost:5000/login";
+  const url = "http://localhost:4000/login";
     const [data, setData] = useState({email: "", password: ""})
 
     function submit(e){
@@ -15,11 +15,9 @@ export default function Login() {
             email: data.email,
             password: data.password
         }).then(res => {
-            console.log(res.data)
-            //const test = JSON.parse(res.data)
-            console.log(res.data.accessToken)
             localStorage.setItem('accessToken', res.data.accessToken)
-            //localStorage.setItem('refreshToken', res.data.refreshToken)
+            setData({email: "", password: ""}) 
+            window.location.href="/loginPage" 
         })
     }
 
