@@ -15,17 +15,21 @@ export default function DeleteDogs() {
     const urlTwo = "http://localhost:4000/worker/dog/" + data.id
 
     const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
-    //console.log(token)
     const headerTwo = {
         'Authorization': tokenTwo
     } 
 
+    /**
+     * @function submit
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     */
     function submit(e){
         e.preventDefault()
         console.log(headerTwo)
         Axios.get(urlTwo,{ id: data.id, headers: headerTwo
         }).then(res => {
-            console.log(res.dataTwo)
             setDogDataList(res.data)
             if (res.dataTwo !== "undefined"){ 
                 console.log('yes')
@@ -34,11 +38,17 @@ export default function DeleteDogs() {
         
     }
 
+    /**
+     * @function submitTwo
+     * @description Submits the form and call two targeted API, then handles the data sent from the server. 
+     * Then alert the user if the request is successful.
+     * @param {eventObject} e The eventObject.
+     * @returns {String|Status} The successful message sent from the server or the fail request error status code.
+     */
     function submitTwo(e){
         e.preventDefault()
         console.log(data.id)
         Axios.delete(url,{id: data.id, headers: headerTwo}).then(res => {
-            //setData(res.data)
             console.log(data)
             alert(res.data)
             if (res.data !== "undefined"){ 
@@ -47,7 +57,6 @@ export default function DeleteDogs() {
         })
         Axios.get(urlTwo,{ id: data.id, headers: headerTwo
         }).then(res => {
-            console.log(res.data)
             setDogDataList(res.data)
             if (res.dataTwo !== "undefined"){ 
                 console.log('yes')
@@ -55,6 +64,13 @@ export default function DeleteDogs() {
         })
     }
 
+    /**
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
     function handle(e){
         const inputData={...data}
         inputData[e.target.id] = e.target.value

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: SearchDogs.js</title>
+    <title>JSDoc: Source: deleteDog.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: SearchDogs.js</h1>
+    <h1 class="page-title">Source: deleteDog.js</h1>
 
     
 
@@ -26,87 +26,72 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import React, { useState} from 'react'
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import CustomCard from '../component/custom_card.js'
-import Row from 'react-bootstrap/Row'
 import Axios from 'axios'
 
+import Row from 'react-bootstrap/Row'
 import dogdefault from '../images/dog01.jpg'
 
-export default function SearchDogs() {
-    /**
-     * @constant dogDataList 
-     * @description Data for storing all the relevant dogs records.
-     * @type {Array}
-     */
+export default function DeleteDogs() {
     const [dogDataList, setDogDataList] = useState({})
+    const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+    const url = "http://localhost:4000/dog/" + data.id
+    const urlTwo = "http://localhost:4000/worker/dog/" + data.id
 
-    /**
-     * @constant data 
-     * @description Data needed for filtering results.
-     * @type {Array}
-     */
-    const [data, setData] = useState({ breed: "", location:""})
-
-    const url = "http://localhost:4000/dog/breed/" + data.breed
-    const urlTwo = "http://localhost:4000/dog/age/" + data.age
-    const urlThree = "http://localhost:4000/dog/location/" + data.location
+    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
+    const headerTwo = {
+        'Authorization': tokenTwo
+    } 
 
     /**
      * @function submit
-     *  Submits the form and call the targeted API, then handles the data sent from the server.
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
      * @param {eventObject} e The eventObject.
      * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
      */
     function submit(e){
         e.preventDefault()
-        Axios.get(url,{ breed: data.breed
+        console.log(headerTwo)
+        Axios.get(urlTwo,{ id: data.id, headers: headerTwo
         }).then(res => {
             setDogDataList(res.data)
-            if (res.data !== "undefined"){ 
+            if (res.dataTwo !== "undefined"){ 
                 console.log('yes')
             }
-        }) 
+        })
+        
     }
 
     /**
      * @function submitTwo
-     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @description Submits the form and call two targeted API, then handles the data sent from the server. 
+     * Then alert the user if the request is successful.
      * @param {eventObject} e The eventObject.
-     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     * @returns {String|Status} The successful message sent from the server or the fail request error status code.
      */
     function submitTwo(e){
         e.preventDefault()
-        Axios.get(urlTwo,{ age: data.age
-        }).then(res => {
-            setDogDataList(res.data)
+        console.log(data.id)
+        Axios.delete(url,{id: data.id, headers: headerTwo}).then(res => {
+            console.log(data)
+            alert(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
-        }) 
-    }
-
-    /**
-     * @function submitThree
-     * @description Submits the form and call the targeted API, then handles the data sent from the server.
-     * @param {eventObject} e The eventObject.
-     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
-     */
-    function submitThree(e){
-        e.preventDefault()
-        Axios.get(urlThree,{ location: data.location
+        })
+        Axios.get(urlTwo,{ id: data.id, headers: headerTwo
         }).then(res => {
             setDogDataList(res.data)
-            if (res.data !== "undefined"){ 
+            if (res.dataTwo !== "undefined"){ 
                 console.log('yes')
             }
-        }) 
+        })
     }
 
-    
     /**
      * @function handle
      * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
@@ -127,27 +112,9 @@ export default function SearchDogs() {
             &lt;Card>
                 &lt;Card.Body>
                     &lt;Form onSubmit={(e)=>submit(e)}>
-                        &lt;Form.Group className="mb-3" controlId="formBasicBreed">
-                            &lt;Form.Label>Dog Breed&lt;/Form.Label>
-                            &lt;Form.Control onChange={(e)=>handle(e)} id="breed" defaultValue={data.breed} placeholder="Dog Breed" type="text" />
-                        &lt;/Form.Group>
-                        &lt;Button variant="primary" type="submit">
-                            Search
-                        &lt;/Button>
-                    &lt;/Form>
-                    &lt;Form onSubmit={(e)=>submitTwo(e)}>
-                        &lt;Form.Group className="mb-3" controlId="formBasicAge">
-                            &lt;Form.Label>Dog Age&lt;/Form.Label>
-                            &lt;Form.Control onChange={(e)=>handle(e)} id="age" defaultValue={data.age} placeholder="Dog Age" type="text" />
-                        &lt;/Form.Group>
-                        &lt;Button variant="primary" type="submit">
-                            Search
-                        &lt;/Button>
-                    &lt;/Form>
-                    &lt;Form onSubmit={(e)=>submitThree(e)}>
-                        &lt;Form.Group className="mb-3" controlId="formBasicLocation">
-                            &lt;Form.Label>Dog Location&lt;/Form.Label>
-                            &lt;Form.Control onChange={(e)=>handle(e)} id="location" defaultValue={data.location} placeholder="Dog Location" type="text" />
+                        &lt;Form.Group className="mb-3" controlId="formBasicId">
+                            &lt;Form.Label>Dog ID&lt;/Form.Label>
+                            &lt;Form.Control onChange={(e)=>handle(e)} id="id" value={data.id} placeholder="Dog ID" type="text" />
                         &lt;/Form.Group>
                         &lt;Button variant="primary" type="submit">
                             Search
@@ -169,7 +136,14 @@ export default function SearchDogs() {
                         ))}
                     &lt;/Row>
                     &lt;br/>&lt;br/>&lt;br/>
-                    
+                    &lt;Form onSubmit={(e)=>submitTwo(e)}>
+                        &lt;Form.Group className="mb-3" controlId="formBasicId">
+                            &lt;Form.Control onClick={(e)=>handle(e)} id="id" value={data.id} placeholder="Dog ID" type="hidden" />
+                        &lt;/Form.Group>
+                        &lt;Button variant="primary" type="submit">
+                            Confirm Delete
+                        &lt;/Button>
+                    &lt;/Form>
                 &lt;/Card.Body>
             &lt;/Card>
         &lt;/div>

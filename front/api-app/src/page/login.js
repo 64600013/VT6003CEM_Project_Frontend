@@ -11,6 +11,12 @@ export default function Login() {
   const url = "http://localhost:4000/login"
     const [data, setData] = useState({email: "", password: ""})
 
+    /**
+     * @function submit
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {JSON|Status} The access token generated from the server or the fail request error status code.
+     */
     function submit(e){
         e.preventDefault()
         Axios.post(url,{
@@ -23,6 +29,13 @@ export default function Login() {
         })
     }
 
+    /**
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
     function handle(e){
         const inputData={...data}
         inputData[e.target.id] = e.target.value

@@ -9,17 +9,29 @@ import Axios from 'axios'
 import dogdefault from '../images/dog01.jpg'
 
 export default function SearchDogs() {
+    /**
+     * @constant dogDataList 
+     * @description Data for storing all the relevant dogs records.
+     * @type {Array}
+     */
     const [dogDataList, setDogDataList] = useState({})
+
+    /**
+     * @constant data 
+     * @description Data needed for filtering results.
+     * @type {Array}
+     */
     const [data, setData] = useState({ breed: "", location:""})
+
     const url = "http://localhost:4000/dog/breed/" + data.breed
     const urlTwo = "http://localhost:4000/dog/age/" + data.age
     const urlThree = "http://localhost:4000/dog/location/" + data.location
 
     /**
-     * @function sds
-     * Submits the form and call the targeted API, then handles the data sent from the server.
+     * @function submit
+     *  Submits the form and call the targeted API, then handles the data sent from the server.
      * @param {eventObject} e The eventObject.
-     * @returns {Object} The rows of dog data retreived from the database.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
      */
     function submit(e){
         e.preventDefault()
@@ -31,6 +43,13 @@ export default function SearchDogs() {
             }
         }) 
     }
+
+    /**
+     * @function submitTwo
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     */
     function submitTwo(e){
         e.preventDefault()
         Axios.get(urlTwo,{ age: data.age
@@ -41,6 +60,13 @@ export default function SearchDogs() {
             }
         }) 
     }
+
+    /**
+     * @function submitThree
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     */
     function submitThree(e){
         e.preventDefault()
         Axios.get(urlThree,{ location: data.location
@@ -54,9 +80,10 @@ export default function SearchDogs() {
 
     
     /**
-     * Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
      * @param {Object} e The eventObject.
-     * @returns {Object} setData.
+     * @returns {Object} The inputData array.
      * 
      */
     function handle(e){

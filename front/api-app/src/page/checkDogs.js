@@ -7,11 +7,16 @@ import Axios from 'axios'
 
 export default function CheckDogs() {
     const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+
+    /**
+     * @constant dataTwo 
+     * @description Data for storing all the relevant dogs records.
+     * @type {Array}
+     */
     const [dataTwo, setDataTwo] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
     const url = "http://localhost:4000/worker/dog/" + data.id
     const urlTwo = "http://localhost:4000/dog/" + dataTwo.id
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
-    //console.log(token)
     const header = {
         'Authorization': token
     } 
@@ -22,6 +27,12 @@ export default function CheckDogs() {
     } 
 
 
+    /**
+     * @function submit
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     */
     function submit(e){
         e.preventDefault()
         console.log(data.id)
@@ -32,9 +43,15 @@ export default function CheckDogs() {
                 console.log('yes')
             }
         })
-        
     }
 
+    /**
+     * @function submitTwo
+     * @description Submits the form and call the targeted API, then handles the data sent from the server. 
+     * Then alert the user if the request is successful.
+     * @param {eventObject} e The eventObject.
+     * @returns {String|Status} The successful message sent from the server or the fail request error status code.
+     */
     function submitTwo(e){
         e.preventDefault()
         console.log(headerTwo)
@@ -58,6 +75,13 @@ export default function CheckDogs() {
     }
 
 
+    /**
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
     function handle(e){
         const inputData={...data}
         inputData[e.target.id] = e.target.value
@@ -65,6 +89,13 @@ export default function CheckDogs() {
         console.log(inputData)
     }
 
+    /**
+     * @function handleTwo
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
     function handleTwo(e){
         const inputData={...dataTwo}
         inputData[e.target.id] = e.target.value

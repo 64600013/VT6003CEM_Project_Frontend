@@ -8,8 +8,15 @@ import register from '../images/register.png'
 
 export default function Register() {
     const url = "http://localhost:4000/worker"
+    
     const [data, setData] = useState({name: "", age: "", sex: "", email: "", password: "", signup_code: ""})
 
+    /**
+     * @function submit
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     */
     function submit(e){
         e.preventDefault()
         Axios.post(url,{name: data.name, age: data.age, sex: data.sex, email: data.email, password: data.password, signup_code: data.signup_code
@@ -24,8 +31,10 @@ export default function Register() {
     }
     
     /**
-     * Handles the data inputted in the input fields, and insert the data into a array for storage.
-     * @param {eventObject} e The eventObject.
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
      * 
      */
     function handle(e){

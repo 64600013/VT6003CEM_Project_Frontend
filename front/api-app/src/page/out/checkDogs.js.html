@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: checkDogs.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: checkDogs.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Axios from 'axios'
+
+
+export default function CheckDogs() {
+    const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+
+    /**
+     * @constant dataTwo 
+     * @description Data for storing all the relevant dogs records.
+     * @type {Array}
+     */
+    const [dataTwo, setDataTwo] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+    const url = "http://localhost:4000/worker/dog/" + data.id
+    const urlTwo = "http://localhost:4000/dog/" + dataTwo.id
+    const token = 'Bearer ' + localStorage.getItem('accessToken') 
+    const header = {
+        'Authorization': token
+    } 
+    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
+    console.log(tokenTwo)
+    const headerTwo = {
+        'Authorization': tokenTwo
+    } 
+
+
+    /**
+     * @function submit
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     */
+    function submit(e){
+        e.preventDefault()
+        console.log(data.id)
+        Axios.get(url,{id: data.id, headers: header}).then(res => {
+            setData(res.data)
+            console.log(data)
+            if (res.data !== "undefined"){ 
+                console.log('yes')
+            }
+        })
+    }
+
+    /**
+     * @function submitTwo
+     * @description Submits the form and call the targeted API, then handles the data sent from the server. 
+     * Then alert the user if the request is successful.
+     * @param {eventObject} e The eventObject.
+     * @returns {String|Status} The successful message sent from the server or the fail request error status code.
+     */
+    function submitTwo(e){
+        e.preventDefault()
+        console.log(headerTwo)
+        console.log(dataTwo)
+        Axios.put(urlTwo,{ 
+            id: dataTwo.id, 
+            name: dataTwo.name, 
+            age: dataTwo.age, 
+            sex: dataTwo.sex, 
+            breed: dataTwo.breed, 
+            location: dataTwo.location, 
+            image: dataTwo.image },{
+            headers: headerTwo
+        }).then(res => {
+            alert(res.data)
+            if (res.data !== "undefined"){ 
+                console.log('yes')
+            }
+        })
+        
+    }
+
+
+    /**
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
+    function handle(e){
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
+    }
+
+    /**
+     * @function handleTwo
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
+    function handleTwo(e){
+        const inputData={...dataTwo}
+        inputData[e.target.id] = e.target.value
+        setDataTwo(inputData)
+        console.log(inputData)
+    }
+
+    return (
+        &lt;div style={{backgroundColor: '#d6d6d6'}}>
+            &lt;br />
+            &lt;Card>
+                &lt;Card.Body>
+                    &lt;Form onSubmit={(e)=>submit(e)}>
+                        &lt;Form.Group className="mb-3" controlId="formBasicId">
+                            &lt;Form.Label>Dog ID&lt;/Form.Label>
+                            &lt;Form.Control onChange={(e)=>handle(e)} id="id" value={data.id} placeholder="Dog ID" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Button variant="primary" type="submit">
+                            Search
+                        &lt;/Button>
+                    &lt;/Form>
+                    &lt;br/>
+                    &lt;Form onSubmit={(e)=>submitTwo(e)}>
+                        &lt;br/>
+                        &lt;Form.Group className="mb-3" controlId="formBasicId">
+                            &lt;Form.Label>Dog ID&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="id" value={data[0]?.id} placeholder="Dog ID" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Form.Group className="mb-3" controlId="formBasicName">
+                            &lt;Form.Label>Dog Name&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="name" defaultValue={data[0]?.name} placeholder="Dog Name" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Form.Group className="mb-3" controlId="formBasicAge">
+                            &lt;Form.Label>Dog Age&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="age" defaultValue={data[0]?.age} placeholder="Dog Age" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Form.Group className="mb-3" controlId="formBasicSex">
+                            &lt;Form.Label>Dog Sex&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="sex" defaultValue={data[0]?.sex} placeholder="Dog Sex" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Form.Group className="mb-3" controlId="formBasicBreed">
+                            &lt;Form.Label>Dog Breed&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="breed" defaultValue={data[0]?.breed} placeholder="Dog Breed" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Form.Group className="mb-3" controlId="formBasicLocation">
+                            &lt;Form.Label>Dog Location&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="location" defaultValue={data[0]?.location} placeholder="Dog Location" type="text" />
+                        &lt;/Form.Group>
+                        &lt;Form.Group className="mb-3" controlId="formBasicImage">
+                            &lt;Form.Label>Image Link&lt;/Form.Label>
+                            &lt;Form.Control onClick={(e)=>handleTwo(e)} id="image" defaultValue={data[0]?.image} placeholder="Image Link" type="text" />
+                        &lt;/Form.Group>
+
+                        &lt;Button variant="primary" type="submit">
+                            Update
+                        &lt;/Button>
+                    &lt;/Form>
+                &lt;/Card.Body>
+            &lt;/Card>
+        &lt;/div>
+    )
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#data">data</a></li><li><a href="global.html#dataTwo">dataTwo</a></li><li><a href="global.html#dogDataList">dogDataList</a></li><li><a href="global.html#handle">handle</a></li><li><a href="global.html#handleTwo">handleTwo</a></li><li><a href="global.html#submit">submit</a></li><li><a href="global.html#submitSubmitstheformandcallthetargetedAPI,thenhandlesthedatasentfromtheserver.">submit Submits the form and call the targeted API, then handles the data sent from the server.</a></li><li><a href="global.html#submitThree">submitThree</a></li><li><a href="global.html#submitTwo">submitTwo</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.10</a> on Fri May 27 2022 22:55:20 GMT+0800 (香港標準時間)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

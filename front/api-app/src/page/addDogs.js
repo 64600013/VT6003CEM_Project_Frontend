@@ -15,6 +15,13 @@ export default function AddDogs() {
         'Authorization': token
     } 
 
+    /**
+     * @function submit
+     * @description Submits the form and call the targeted API, then handles the data sent from the server. 
+     * Then alert the user if the request is successful.
+     * @param {eventObject} e The eventObject.
+     * @returns {String|Status} The successful message sent from the server or the fail request error status code.
+     */
     function submit(e){
         e.preventDefault()
         console.log(header)
@@ -28,7 +35,6 @@ export default function AddDogs() {
             image: data.image},{
             headers: header
         }).then(res => {
-            console.log(res.data)
             alert(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
@@ -37,6 +43,13 @@ export default function AddDogs() {
         
     }
 
+    /**
+     * @function handle
+     * @description Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} The inputData array.
+     * 
+     */
     function handle(e){
         const inputData={...data}
         inputData[e.target.id] = e.target.value
