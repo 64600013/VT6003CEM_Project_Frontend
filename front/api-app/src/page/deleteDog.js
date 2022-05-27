@@ -1,11 +1,12 @@
+import React, { useState } from 'react'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import CustomCard from '../component/custom_card.js'
 import Axios from 'axios'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import React, { useState, useEffect } from 'react'
-import CustomCard from '../component/custom_card.js';
-import Row from 'react-bootstrap/Row';
-import dogdefault from '../images/dog01.jpg';
+
+import Row from 'react-bootstrap/Row'
+import dogdefault from '../images/dog01.jpg'
 
 export default function DeleteDogs() {
     const [dogDataList, setDogDataList] = useState({})
@@ -20,7 +21,7 @@ export default function DeleteDogs() {
     } 
 
     function submit(e){
-        e.preventDefault();
+        e.preventDefault()
         console.log(headerTwo)
         Axios.get(urlTwo,{ id: data.id, headers: headerTwo
         }).then(res => {
@@ -34,7 +35,7 @@ export default function DeleteDogs() {
     }
 
     function submitTwo(e){
-        e.preventDefault();
+        e.preventDefault()
         console.log(data.id)
         Axios.delete(url,{id: data.id, headers: headerTwo}).then(res => {
             //setData(res.data)
@@ -46,7 +47,7 @@ export default function DeleteDogs() {
         })
         Axios.get(urlTwo,{ id: data.id, headers: headerTwo
         }).then(res => {
-            console.log(res.dataTwo)
+            console.log(res.data)
             setDogDataList(res.data)
             if (res.dataTwo !== "undefined"){ 
                 console.log('yes')
@@ -55,10 +56,10 @@ export default function DeleteDogs() {
     }
 
     function handle(e){
-        const newdata={...data}
-        newdata[e.target.id] = e.target.value
-        setData(newdata)
-        console.log(newdata)
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
     }
 
     return (

@@ -1,19 +1,17 @@
 import React from 'react'
-// bootstrap components
-import Navbar from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-// react router
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-// screens
-import Home from '../page/home';
-import Login from '../page/login';
-import Register from '../page/register';
-import LoginPage from '../page/loginPage';
-import CheckDogs from '../page/checkDogs';
-import DeleteDogs from '../page/deleteDog';
-import AddDogs from '../page/addDogs';
-import SearchDogs from '../page/SearchDogs';
+import Navbar from 'react-bootstrap/Navbar'
+import Container from 'react-bootstrap/Container'
+import Nav from 'react-bootstrap/Nav'
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+
+import Home from '../page/home'
+import Login from '../page/login'
+import Register from '../page/register'
+import LoginPage from '../page/loginPage'
+import CheckDogs from '../page/checkDogs'
+import DeleteDogs from '../page/deleteDog'
+import AddDogs from '../page/addDogs'
+import SearchDogs from '../page/SearchDogs'
 
 export default function Header() {
     return (

@@ -1,8 +1,8 @@
-import Axios from 'axios'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Axios from 'axios'
 
 
 export default function CheckDogs() {
@@ -23,7 +23,7 @@ export default function CheckDogs() {
 
 
     function submit(e){
-        e.preventDefault();
+        e.preventDefault()
         console.log(data.id)
         Axios.get(url,{id: data.id, headers: header}).then(res => {
             setData(res.data)
@@ -36,7 +36,7 @@ export default function CheckDogs() {
     }
 
     function submitTwo(e){
-        e.preventDefault();
+        e.preventDefault()
         console.log(headerTwo)
         console.log(dataTwo)
         Axios.put(urlTwo,{ 
@@ -46,7 +46,7 @@ export default function CheckDogs() {
             sex: dataTwo.sex, 
             breed: dataTwo.breed, 
             location: dataTwo.location, 
-            image: dataTwo.image},{
+            image: dataTwo.image },{
             headers: headerTwo
         }).then(res => {
             alert(res.data)
@@ -59,17 +59,17 @@ export default function CheckDogs() {
 
 
     function handle(e){
-        const newdata={...data}
-        newdata[e.target.id] = e.target.value
-        setData(newdata)
-        console.log(newdata)
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
     }
 
     function handleTwo(e){
-        const newdata={...dataTwo}
-        newdata[e.target.id] = e.target.value
-        setDataTwo(newdata)
-        console.log(newdata)
+        const inputData={...dataTwo}
+        inputData[e.target.id] = e.target.value
+        setDataTwo(inputData)
+        console.log(inputData)
     }
 
     return (

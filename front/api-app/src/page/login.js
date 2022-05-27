@@ -1,16 +1,18 @@
-import Axios from 'axios'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'
-import user from '../images/login-icon.png';
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Axios from 'axios'
+
+import user from '../images/login-icon.png'
+
 
 export default function Login() {
-  const url = "http://localhost:4000/login";
+  const url = "http://localhost:4000/login"
     const [data, setData] = useState({email: "", password: ""})
 
     function submit(e){
-        e.preventDefault();
+        e.preventDefault()
         Axios.post(url,{
             email: data.email,
             password: data.password
@@ -22,10 +24,10 @@ export default function Login() {
     }
 
     function handle(e){
-        const newdata={...data}
-        newdata[e.target.id] = e.target.value
-        setData(newdata)
-        console.log(newdata)
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
     }
 
 

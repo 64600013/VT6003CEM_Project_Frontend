@@ -1,14 +1,10 @@
-import React, { useEffect, useState, Component } from 'react'
-// custom components
-import CustomTwo from '../component/custom_card.js';
-// bootstrap components
-import Row from 'react-bootstrap/Row';
+import React, { useEffect, useState } from 'react'
+import CustomTwo from '../component/custom_card.js'
+import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
+import Axios from 'axios'
 
-// image
-import dogdefault from '../images/dog01.jpg';
-
-import Axios from 'axios';
+import dogdefault from '../images/dog01.jpg'
 
 export default function LoginPage() {
     const [dogDataList, setDogDataList] = useState({})

@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react'
-// custom components
-import CustomCard from '../component/custom_card.js';
-// bootstrap components
-import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
-// import Container from 'react-bootstrap/Container';
-// import CardGroup from 'react-bootstrap/CardGroup';
- import Card from 'react-bootstrap/Card';
-// image
-import dogdefault from '../images/dog01.jpg';
-import doglist from '../images/doglist.png';
+import CustomCard from '../component/custom_card.js'
+import Row from 'react-bootstrap/Row'
+import Card from 'react-bootstrap/Card'
+import axios from 'axios'
 
-import axios from 'axios';
+import dogdefault from '../images/dog01.jpg'
+import doglist from '../images/doglist.png'
+
 
 export default function Home() {
     const [dogDataList, setDogDataList] = useState({})
+    const url = 'http://localhost:4000/dog'
 
     useEffect(() => {
-        axios.get('http://localhost:4000/dog')
+        axios.get(url)
             .then(res => {
                 setDogDataList(res.data)
             }).catch(err => {

@@ -1,36 +1,38 @@
-import Axios from 'axios'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'
-// bootstrap components
-// import Card from 'react-bootstrap/Card';
-// import Form from 'react-bootstrap/Form';
-// import Button from 'react-bootstrap/Button';
-import register from '../images/register.png';
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Axios from 'axios'
+
+import register from '../images/register.png'
 
 export default function Register() {
-    const url = "http://localhost:4000/worker";
+    const url = "http://localhost:4000/worker"
     const [data, setData] = useState({name: "", age: "", sex: "", email: "", password: "", signup_code: ""})
 
     function submit(e){
-        e.preventDefault();
+        e.preventDefault()
         Axios.post(url,{name: data.name, age: data.age, sex: data.sex, email: data.email, password: data.password, signup_code: data.signup_code
         }).then(res => {
             console.log(res.data)
             if (res.data !== "undefined"){ 
-                console.log('yes')
                 window.location.href="/login"
+                console.log('yes')
             }
         })
         
     }
-
+    
+    /**
+     * Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {eventObject} e The eventObject.
+     * 
+     */
     function handle(e){
-        const newdata={...data}
-        newdata[e.target.id] = e.target.value
-        setData(newdata)
-        console.log(newdata)
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
     }
 
     return (

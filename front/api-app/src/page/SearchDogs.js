@@ -1,11 +1,12 @@
+import React, { useState} from 'react'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import CustomCard from '../component/custom_card.js'
+import Row from 'react-bootstrap/Row'
 import Axios from 'axios'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import React, { useState, useEffect } from 'react'
-import CustomCard from '../component/custom_card.js';
-import Row from 'react-bootstrap/Row';
-import dogdefault from '../images/dog01.jpg';
+
+import dogdefault from '../images/dog01.jpg'
 
 export default function SearchDogs() {
     const [dogDataList, setDogDataList] = useState({})
@@ -14,14 +15,14 @@ export default function SearchDogs() {
     const urlTwo = "http://localhost:4000/dog/age/" + data.age
     const urlThree = "http://localhost:4000/dog/location/" + data.location
 
-    // const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
-    // //console.log(token)
-    // const headerTwo = {
-    //     'Authorization': tokenTwo
-    // } 
-
+    /**
+     * @function sds
+     * Submits the form and call the targeted API, then handles the data sent from the server.
+     * @param {eventObject} e The eventObject.
+     * @returns {Object} The rows of dog data retreived from the database.
+     */
     function submit(e){
-        e.preventDefault();
+        e.preventDefault()
         Axios.get(url,{ breed: data.breed
         }).then(res => {
             setDogDataList(res.data)
@@ -31,7 +32,7 @@ export default function SearchDogs() {
         }) 
     }
     function submitTwo(e){
-        e.preventDefault();
+        e.preventDefault()
         Axios.get(urlTwo,{ age: data.age
         }).then(res => {
             setDogDataList(res.data)
@@ -41,7 +42,7 @@ export default function SearchDogs() {
         }) 
     }
     function submitThree(e){
-        e.preventDefault();
+        e.preventDefault()
         Axios.get(urlThree,{ location: data.location
         }).then(res => {
             setDogDataList(res.data)
@@ -51,12 +52,18 @@ export default function SearchDogs() {
         }) 
     }
 
-
+    
+    /**
+     * Handles the data inputted in the input fields, and insert the data into a array for storage.
+     * @param {Object} e The eventObject.
+     * @returns {Object} setData.
+     * 
+     */
     function handle(e){
-        const newdata={...data}
-        newdata[e.target.id] = e.target.value
-        setData(newdata)
-        console.log(newdata)
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
     }
 
     return (

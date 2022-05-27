@@ -1,8 +1,9 @@
-import Axios from 'axios'
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import React, { useState } from 'react'
+import Card from 'react-bootstrap/Card'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import Axios from 'axios'
+
 
 
 export default function AddDogs() {
@@ -10,13 +11,12 @@ export default function AddDogs() {
     const url = "http://localhost:4000/dog/"
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
     var resMsg = ''
-    //console.log(token)
     const header = {
         'Authorization': token
     } 
 
     function submit(e){
-        e.preventDefault();
+        e.preventDefault()
         console.log(header)
         console.log(data)
         Axios.post(url,{ 
@@ -38,10 +38,10 @@ export default function AddDogs() {
     }
 
     function handle(e){
-        const newdata={...data}
-        newdata[e.target.id] = e.target.value
-        setData(newdata)
-        console.log(newdata)
+        const inputData={...data}
+        inputData[e.target.id] = e.target.value
+        setData(inputData)
+        console.log(inputData)
     }
 
 
@@ -72,7 +72,7 @@ export default function AddDogs() {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicLocation">
                             <Form.Label>Dog Location</Form.Label>
-                            <Form.Control onClick={(e)=>handle(e)} id="location" defaultValue={data.location} placeholder="Dog Location" type="text" />
+                            <Form.Control onChange={(e)=>handle(e)} id="location" defaultValue={data.location} placeholder="Dog Location" type="text" />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="formBasicImage">
                             <Form.Label>Image Link</Form.Label>
