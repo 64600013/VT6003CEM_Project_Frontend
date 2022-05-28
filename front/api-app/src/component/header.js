@@ -27,7 +27,9 @@ export default function Header() {
                             <Nav className="me-auto">
 
                             </Nav>
+                            
                             <Nav>
+                                 
                                 <Nav.Link as={Link} to="/SearchDogs">Search Dogs</Nav.Link>
                                 {localStorage.getItem('accessToken')?<Nav.Link as={Link} to="/loginPage">Employee</Nav.Link>:null}
                                 {!localStorage.getItem('accessToken')?<Nav.Link as={Link} to="/login">Login</Nav.Link>:null}

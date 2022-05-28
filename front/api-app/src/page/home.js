@@ -27,7 +27,7 @@ export default function Home() {
             <br />
             <div style={{backgroundColor: '#d6d6d6'}}>
                 <Card>
-                    <Card.Img variant="top" src={doglist} width={100} height={200} />
+                    <Card.Img variant="top" src={doglist} width={100} height={250} />
                 </Card>
                 <br/>
                 <Row xs={'auto'} className="g-4 justify-content-md-center">

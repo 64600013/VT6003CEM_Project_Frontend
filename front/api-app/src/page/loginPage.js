@@ -54,7 +54,6 @@ export default function LoginPage() {
                             breed={dogDataList[index]?.breed || "Not Available"}
                             location={dogDataList[index]?.location || "Not Available"}>
                         </CustomTwo>
-                        
                     </div>
                 ))}
             </Row>
