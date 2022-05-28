@@ -4,13 +4,15 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Axios from 'axios'
 
-
+import addDogs from '../images/addDogs.png'
 
 export default function AddDogs() {
     const [data, setData] = useState({name: "", age: "", sex: "", breed: "",location: "", image: ""})
     const url = "http://localhost:4000/dog/"
-    const token = 'Bearer ' + localStorage.getItem('accessToken') 
     var resMsg = ''
+
+    // Set token
+    const token = 'Bearer ' + localStorage.getItem('accessToken') 
     const header = {
         'Authorization': token
     } 
@@ -60,6 +62,9 @@ export default function AddDogs() {
 
     return (
         <div style={{backgroundColor: '#d6d6d6'}}>
+            <Card>
+                <Card.Img variant="top" src={addDogs} width={100} height={250} />
+            </Card>
             <br />
             <Card>
                 <Card.Body>

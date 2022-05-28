@@ -4,18 +4,22 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import CustomCard from '../component/custom_card.js'
 import Axios from 'axios'
-
 import Row from 'react-bootstrap/Row'
+
+import deleteDogs from '../images/deleteDogs.png'
 import dogdefault from '../images/dog01.jpg'
 
 export default function DeleteDogs() {
     const [dogDataList, setDogDataList] = useState({})
+
+    // Use to set the state to empty.
     const initialState = {}
-    console.log(initialState)
+
     const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
     const url = "http://localhost:4000/dog/" + data.id
     const urlTwo = "http://localhost:4000/worker/dog/" + data.id
 
+    // Set token
     const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
     const headerTwo = {
         'Authorization': tokenTwo
@@ -95,6 +99,9 @@ export default function DeleteDogs() {
 
     return (
         <div style={{backgroundColor: '#d6d6d6'}}>
+            <Card>
+                <Card.Img variant="top" src={deleteDogs} width={100} height={250} />
+            </Card>
             <br />
             <Card>
                 <Card.Body>

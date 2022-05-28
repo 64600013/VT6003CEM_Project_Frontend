@@ -17,6 +17,8 @@ export default function CheckDogs() {
     const [dataTwo, setDataTwo] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
     const url = "http://localhost:4000/worker/dog/" + data.id
     const urlTwo = "http://localhost:4000/dog/" + dataTwo.id
+
+    // Set token
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
     const header = {
         'Authorization': token

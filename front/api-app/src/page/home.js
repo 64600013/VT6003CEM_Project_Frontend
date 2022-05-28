@@ -12,6 +12,7 @@ export default function Home() {
     const [dogDataList, setDogDataList] = useState({})
     const url = 'http://localhost:4000/dog'
 
+    // Load all dog record once the page is loading
     useEffect(() => {
         axios.get(url)
             .then(res => {

@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row'
 import Axios from 'axios'
 
 import dogdefault from '../images/dog01.jpg'
+import searchDogs from '../images/searchDogs.png'
 
 export default function SearchDogs() {
     /**
@@ -22,6 +23,7 @@ export default function SearchDogs() {
      * @type {Array}
      */
     const [data, setData] = useState({ breed: "", location:""})
+    const initialState = {}
 
     const url = "http://localhost:4000/dog/breed/" + data.breed
     const urlTwo = "http://localhost:4000/dog/age/" + data.age
@@ -41,7 +43,10 @@ export default function SearchDogs() {
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
-        }) 
+        }).catch( function (error) {
+            setDogDataList(initialState)
+            alert("The dog record is not found, please re-try.")          
+        })  
     }
 
     /**
@@ -58,6 +63,9 @@ export default function SearchDogs() {
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
+        }).catch( function (error) {
+            setDogDataList(initialState)
+            alert("The dog record is not found, please re-try.")          
         }) 
     }
 
@@ -75,9 +83,22 @@ export default function SearchDogs() {
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
-        }) 
+        }).catch( function (error) {
+            setDogDataList(initialState)
+            alert("The dog record is not found, please re-try.")          
+        })  
     }
 
+    /**
+     * @function submitFour
+     * @description Clear the search result form the page for the user.
+     * @param {eventObject} e The eventObject.
+     * 
+     */
+     function submitFour(e){
+        e.preventDefault()
+        setDogDataList(initialState)
+    }
     
     /**
      * @function handle
@@ -95,6 +116,9 @@ export default function SearchDogs() {
 
     return (
         <div style={{backgroundColor: '#d6d6d6'}}>
+            <Card>
+                <Card.Img variant="top" src={searchDogs} width={100} height={250} />
+            </Card>
             <br />
             <Card>
                 <Card.Body>
@@ -123,6 +147,12 @@ export default function SearchDogs() {
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Search
+                        </Button>
+                    </Form>
+                    <br/>
+                    <Form onSubmit={(e)=>submitFour(e)}>
+                        <Button variant="primary" type="submit">
+                            Clear Search
                         </Button>
                     </Form>
                     <br/>

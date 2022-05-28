@@ -11,12 +11,15 @@ import dogdefault from '../images/dog01.jpg'
 export default function LoginPage() {
     const [dogDataList, setDogDataList] = useState({})
     const url = 'http://localhost:4000/worker/dog'
+
+    // Set token
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
     console.log(token)
     const header = {
         'Authorization': token
     } 
     
+    // Load all dog data upon loading the page
     useEffect( () => {
             Axios.get(url, {headers: header}).then(res => {
                 setDogDataList(res.data)
