@@ -10,6 +10,8 @@ import dogdefault from '../images/dog01.jpg'
 
 export default function DeleteDogs() {
     const [dogDataList, setDogDataList] = useState({})
+    const initialState = {}
+    console.log(initialState)
     const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
     const url = "http://localhost:4000/dog/" + data.id
     const urlTwo = "http://localhost:4000/worker/dog/" + data.id
@@ -34,34 +36,47 @@ export default function DeleteDogs() {
             if (res.dataTwo !== "undefined"){ 
                 console.log('yes')
             }
+        }).catch( function (error) {
+            setDogDataList(initialState)
+            alert("The dog record is not found, please re-try.")          
         })
-        
     }
 
     /**
      * @function submitTwo
      * @description Submits the form and call two targeted API, then handles the data sent from the server. 
-     * Then alert the user if the request is successful.
+     * If the the get and delete function received a error status code, then the process will stop alert the user if the request is not successful.
+     * If not then alert the user if the request is successful.
      * @param {eventObject} e The eventObject.
      * @returns {String|Status} The successful message sent from the server or the fail request error status code.
      */
     function submitTwo(e){
         e.preventDefault()
         console.log(data.id)
+        var deleteError = false
         Axios.delete(url,{id: data.id, headers: headerTwo}).then(res => {
             console.log(data)
             alert(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
+        }).catch( function (error) {
+            deleteError = true
+            alert("The delete did not go through, please re-try.")          
         })
-        Axios.get(urlTwo,{ id: data.id, headers: headerTwo
-        }).then(res => {
-            setDogDataList(res.data)
-            if (res.dataTwo !== "undefined"){ 
-                console.log('yes')
-            }
-        })
+        console.log(deleteError)
+        if(deleteError === false){
+            Axios.get(urlTwo,{ id: data.id, headers: headerTwo
+            }).then(res => {
+                alert("The delete of the dog record is sucessful!")
+                if (res.data !== "undefined"){ 
+                    console.log('yes')
+                }
+            }).catch( function (error) {
+                setDogDataList(initialState)
+                alert("The dog record is not exist in the database anymore.")          
+            })
+        }
     }
 
     /**

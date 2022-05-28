@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import CustomTwo from '../component/custom_card.js'
+import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
 import Axios from 'axios'
 
+import employee from '../images/employee.png'
 import dogdefault from '../images/dog01.jpg'
 
 export default function LoginPage() {
@@ -28,6 +30,9 @@ export default function LoginPage() {
 
     return (
         <div style={{backgroundColor: '#d6d6d6', justifyContent:'center'}}>
+            <Card>
+                <Card.Img variant="top" src={employee} width={100} height={250} />
+            </Card>
             <br/>
             <>
                 <span>&nbsp;&nbsp;</span><Button href="/checkDogs">Check Dogs</Button> 

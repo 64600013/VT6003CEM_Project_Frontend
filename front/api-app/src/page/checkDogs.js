@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Axios from 'axios'
 
+import checkDogs from '../images/checkDogs.png'
 
 export default function CheckDogs() {
     const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
@@ -42,6 +43,8 @@ export default function CheckDogs() {
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
+        }).catch( function (error) {
+            alert("The dog record is not found, please re-try.")          
         })
     }
 
@@ -105,6 +108,9 @@ export default function CheckDogs() {
 
     return (
         <div style={{backgroundColor: '#d6d6d6'}}>
+            <Card>
+                <Card.Img variant="top" src={checkDogs} width={100} height={250} />
+            </Card>
             <br />
             <Card>
                 <Card.Body>
