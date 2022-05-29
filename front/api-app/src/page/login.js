@@ -8,14 +8,18 @@ import user from '../images/login-icon.png'
 
 
 export default function Login() {
+  // API Path
   const url = "http://localhost:4000/login"
-    const [data, setData] = useState({email: "", password: ""})
+  const [data, setData] = useState({email: "", password: ""})
 
     /**
      * @function submit
      * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * This is used to sent the account info to call the POST API, in order to login to the system and get the access token.
+     * If the account is found, then the access token will be sent back and set to the local storage.
+     * Then the user will be re-routed once user login.
      * @param {eventObject} e The eventObject.
-     * @returns {JSON|Status} The access token generated from the server or the fail request error status code.
+     * @returns {JSON|String} The access token generated from the server or the fail request error string.
      */
     function submit(e){
         e.preventDefault()
@@ -26,7 +30,9 @@ export default function Login() {
             localStorage.setItem('accessToken', res.data.accessToken)
             setData({email: "", password: ""}) 
             window.location.href="/loginPage" 
-        })
+        }).catch( function (error) {
+          alert("The account is not found.")          
+      })
     }
 
     /**

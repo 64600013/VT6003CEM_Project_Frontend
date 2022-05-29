@@ -2,7 +2,7 @@ import React, { useState} from 'react'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import CustomCard from '../component/custom_card.js'
+import DogCard from '../component/dogCard.js'
 import Row from 'react-bootstrap/Row'
 import Axios from 'axios'
 
@@ -11,11 +11,11 @@ import searchDogs from '../images/searchDogs.png'
 
 export default function SearchDogs() {
     /**
-     * @constant dogDataList 
+     * @constant dogData 
      * @description Data for storing all the relevant dogs records.
      * @type {Array}
      */
-    const [dogDataList, setDogDataList] = useState({})
+    const [dogData, setDogData] = useState({})
 
     /**
      * @constant data 
@@ -23,15 +23,21 @@ export default function SearchDogs() {
      * @type {Array}
      */
     const [data, setData] = useState({ breed: "", location:""})
+
+    // Use to set the state to empty.
     const initialState = {}
 
+    // API Path
     const url = "http://localhost:4000/dog/breed/" + data.breed
     const urlTwo = "http://localhost:4000/dog/age/" + data.age
     const urlThree = "http://localhost:4000/dog/location/" + data.location
 
     /**
      * @function submit
-     *  Submits the form and call the targeted API, then handles the data sent from the server.
+     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * This is used to fetch the dog data by calling the GET API using the breed data. 
+     * If the request is sucessful, the dog record will be stored in the array.
+     * If the request failed, the error message will be alerted to notify users and clear the dog record array to make sure it is empty.
      * @param {eventObject} e The eventObject.
      * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
      */
@@ -39,12 +45,12 @@ export default function SearchDogs() {
         e.preventDefault()
         Axios.get(url,{ breed: data.breed
         }).then(res => {
-            setDogDataList(res.data)
+            setDogData(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
         }).catch( function (error) {
-            setDogDataList(initialState)
+            setDogData(initialState)
             alert("The dog record is not found, please re-try.")          
         })  
     }
@@ -52,6 +58,9 @@ export default function SearchDogs() {
     /**
      * @function submitTwo
      * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * This is used to fetch the dog data by calling the GET API using the age data. 
+     * If the request is sucessful, the dog record will be stored in the array.
+     * If the request failed, the error message will be alerted to notify users and clear the dog record array to make sure it is empty.
      * @param {eventObject} e The eventObject.
      * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
      */
@@ -59,12 +68,12 @@ export default function SearchDogs() {
         e.preventDefault()
         Axios.get(urlTwo,{ age: data.age
         }).then(res => {
-            setDogDataList(res.data)
+            setDogData(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
         }).catch( function (error) {
-            setDogDataList(initialState)
+            setDogData(initialState)
             alert("The dog record is not found, please re-try.")          
         }) 
     }
@@ -72,6 +81,9 @@ export default function SearchDogs() {
     /**
      * @function submitThree
      * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * This is used to fetch the dog data by calling the GET API using the location data. 
+     * If the request is sucessful, the dog record will be stored in the array.
+     * If the request failed, the error message will be alerted to notify users and clear the dog record array to make sure it is empty.
      * @param {eventObject} e The eventObject.
      * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
      */
@@ -79,12 +91,12 @@ export default function SearchDogs() {
         e.preventDefault()
         Axios.get(urlThree,{ location: data.location
         }).then(res => {
-            setDogDataList(res.data)
+            setDogData(res.data)
             if (res.data !== "undefined"){ 
                 console.log('yes')
             }
         }).catch( function (error) {
-            setDogDataList(initialState)
+            setDogData(initialState)
             alert("The dog record is not found, please re-try.")          
         })  
     }
@@ -92,12 +104,13 @@ export default function SearchDogs() {
     /**
      * @function submitFour
      * @description Clear the search result form the page for the user.
+     * This is used to clear the DogData array to be completely empty, in order to refresh the search result.
      * @param {eventObject} e The eventObject.
      * 
      */
      function submitFour(e){
         e.preventDefault()
-        setDogDataList(initialState)
+        setDogData(initialState)
     }
     
     /**
@@ -157,16 +170,21 @@ export default function SearchDogs() {
                     </Form>
                     <br/>
                     <Row xs={'auto'} className="g-4 justify-content-md-center">
-                        {Array.from({ length: dogDataList.length }).map((_, index) => (
+                        {Array.from({ length: dogData.length }).map((_, index) => (
                             <div key={index}> 
-                                <CustomCard
-                                    name={dogDataList[index]?.name || "Not Available"}
-                                    dogImg={dogDataList[index]?.image || dogdefault}
-                                    sex={dogDataList[index]?.sex || "Not Available"}
-                                    age={dogDataList[index]?.age || "Not Available"}
-                                    breed={dogDataList[index]?.breed || "Not Available"}
-                                    location={dogDataList[index]?.location || "Not Available"}>
-                                </CustomCard>
+                                {
+                                    /* Import and used the dogCard component. */
+                                    /* Using the data retrived to display it on the page. */
+                                    /* If any of the column in the data is missing, then it will be replaced with a default value. */
+                                }
+                                <DogCard
+                                    name={dogData[index]?.name || "Not Available"}
+                                    dogImg={dogData[index]?.image || dogdefault}
+                                    sex={dogData[index]?.sex || "Not Available"}
+                                    age={dogData[index]?.age || "Not Available"}
+                                    breed={dogData[index]?.breed || "Not Available"}
+                                    location={dogData[index]?.location || "Not Available"}>
+                                </DogCard>
                             </div>
                         ))}
                     </Row>

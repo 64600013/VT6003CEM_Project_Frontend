@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CustomTwo from '../component/custom_card.js'
+import DogCardTwo from '../component/dogCardTwo.js'
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Button from 'react-bootstrap/Button'
@@ -9,20 +9,21 @@ import employee from '../images/employee.png'
 import dogdefault from '../images/dog01.jpg'
 
 export default function LoginPage() {
-    const [dogDataList, setDogDataList] = useState({})
+    const [dogData, setDogData] = useState({})
     const url = 'http://localhost:4000/worker/dog'
 
-    // Set token
+    // Get the token stored in the browser local storage.
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
     console.log(token)
     const header = {
         'Authorization': token
     } 
     
-    // Load all dog data upon loading the page
+    // Call the GET dog API once the page is start loading
+    // Then set the retrived data into the array for display.
     useEffect( () => {
             Axios.get(url, {headers: header}).then(res => {
-                setDogDataList(res.data)
+                setDogData(res.data)
             }).catch(err => {
                 window.location.href="/" 
                 console.log(err)
@@ -44,16 +45,21 @@ export default function LoginPage() {
             </>
             <br/><br/>
             <Row xs={'auto'} md={'auto'} className="g-4 justify-content-md-center">
-                {Array.from({ length: dogDataList.length }).map((_, index) => (
+                {Array.from({ length: dogData.length }).map((_, index) => (
                     <div key={index}>
-                        <CustomTwo
-                            dogImg={dogDataList[index]?.image || dogdefault}
-                            name={dogDataList[index]?.name || "Not Available"}
-                            sex={dogDataList[index]?.sex || "Not Available"}
-                            age={dogDataList[index]?.age || "Not Available"}
-                            breed={dogDataList[index]?.breed || "Not Available"}
-                            location={dogDataList[index]?.location || "Not Available"}>
-                        </CustomTwo>
+                        {
+                            /* Import and used the dogCardTwo component. */
+                            /* Using the data retrived to display it on the page. */
+                            /* If any of the column in the data is missing, then it will be replaced with a default value. */
+                        }
+                        <DogCardTwo
+                            dogImg={dogData[index]?.image || dogdefault}
+                            name={dogData[index]?.name || "Not Available"}
+                            sex={dogData[index]?.sex || "Not Available"}
+                            age={dogData[index]?.age || "Not Available"}
+                            breed={dogData[index]?.breed || "Not Available"}
+                            location={dogData[index]?.location || "Not Available"}>
+                        </DogCardTwo>
                     </div>
                 ))}
             </Row>

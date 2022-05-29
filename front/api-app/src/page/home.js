@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import CustomCard from '../component/custom_card.js'
+import DogCard from '../component/dogCard.js'
 import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
 import axios from 'axios'
@@ -9,14 +9,17 @@ import doglist from '../images/doglist.png'
 
 
 export default function Home() {
-    const [dogDataList, setDogDataList] = useState({})
+    const [dogData, setDogData] = useState({})
+
+    // API Path
     const url = 'http://localhost:4000/dog'
 
-    // Load all dog record once the page is loading
+    // Call the GET dog API once the page is start loading
+    // Then set the retrived data into the array for display.
     useEffect(() => {
         axios.get(url)
             .then(res => {
-                setDogDataList(res.data)
+                setDogData(res.data)
             }).catch(err => {
                 console.log(err)
             })
@@ -31,17 +34,21 @@ export default function Home() {
                 </Card>
                 <br/>
                 <Row xs={'auto'} className="g-4 justify-content-md-center">
-                    {Array.from({ length: dogDataList.length }).map((_, index) => (
+                    {Array.from({ length: dogData.length }).map((_, index) => (
                         <div key={index}>
-                            
-                            <CustomCard
-                                name={dogDataList[index]?.name || "Not Available"}
-                                dogImg={dogDataList[index]?.image || dogdefault}
-                                sex={dogDataList[index]?.sex || "Not Available"}
-                                age={dogDataList[index]?.age || "Not Available"}
-                                breed={dogDataList[index]?.breed || "Not Available"}
-                                location={dogDataList[index]?.location || "Not Available"}>
-                            </CustomCard>
+                            {
+                            /* Import and used the dogCard component. */
+                            /* Using the data retrived to display it on the page. */
+                            /* If any of the column in the data is missing, then it will be replaced with a default value. */
+                            }
+                            <DogCard
+                                name={dogData[index]?.name || "Not Available"}
+                                dogImg={dogData[index]?.image || dogdefault}
+                                sex={dogData[index]?.sex || "Not Available"}
+                                age={dogData[index]?.age || "Not Available"}
+                                breed={dogData[index]?.breed || "Not Available"}
+                                location={dogData[index]?.location || "Not Available"}>
+                            </DogCard>
                         </div>
                     ))}
                 </Row>

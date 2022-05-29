@@ -7,6 +7,11 @@ import Axios from 'axios'
 import checkDogs from '../images/checkDogs.png'
 
 export default function CheckDogs() {
+    /**
+     * @constant data 
+     * @description Data for storing all the relevant dogs records.
+     * @type {Array}
+     */
     const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
 
     /**
@@ -15,10 +20,12 @@ export default function CheckDogs() {
      * @type {Array}
      */
     const [dataTwo, setDataTwo] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
+
+    // API url to call
     const url = "http://localhost:4000/worker/dog/" + data.id
     const urlTwo = "http://localhost:4000/dog/" + dataTwo.id
 
-    // Set token
+    // Get the token stored in the browser local storage.
     const token = 'Bearer ' + localStorage.getItem('accessToken') 
     const header = {
         'Authorization': token
@@ -32,13 +39,18 @@ export default function CheckDogs() {
 
     /**
      * @function submit
-     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @description Submits the form and call the targeted API, then handles the data sent from the server. 
+     * This is used to get dog record using id by calling the get API.
+     * Then the data will be retrived from the server if the request is sucessful, 
+     * if not an error message will be alerted to notify the user that it failed.
      * @param {eventObject} e The eventObject.
      * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
      */
     function submit(e){
         e.preventDefault()
         console.log(data.id)
+
+        // This calls the get API and try to retrive the data.
         Axios.get(url,{id: data.id, headers: header}).then(res => {
             setData(res.data)
             console.log(data)
@@ -53,7 +65,9 @@ export default function CheckDogs() {
     /**
      * @function submitTwo
      * @description Submits the form and call the targeted API, then handles the data sent from the server. 
-     * Then alert the user if the request is successful.
+     * This is used to update dog record using id by calling the post API. 
+     * The inputted data will be sent to the server and update the dog record, 
+     * if not an error message will be sent back and alerted to notify the user that it failed.
      * @param {eventObject} e The eventObject.
      * @returns {String|Status} The successful message sent from the server or the fail request error status code.
      */

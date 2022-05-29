@@ -13,9 +13,12 @@ export default function Register() {
 
     /**
      * @function submit
-     * @description Submits the form and call the targeted API, then handles the data sent from the server.
+     * @description Submits the form and call the targeted API, then handles the data sent from the server. 
+     * This is used to sent all the inputted value to the server by calling the POST API, and create a new worker account in database.
+     * If the request is unsuccessful, then the error will be caught and alert the user the request failed.
+     * If the request is successful, then the user will be re=routed to the login page for login.
      * @param {eventObject} e The eventObject.
-     * @returns {Object|Status} The rows of dog data retreived from the database or the fail request error status code.
+     * @returns {Status} The successful request status code or the fail request error status code.
      */
     function submit(e){
         e.preventDefault()
@@ -26,8 +29,10 @@ export default function Register() {
                 window.location.href="/login"
                 console.log('yes')
             }
+        }).catch( function (error) {
+            alert("The register failed, please re-try.")          
         })
-        
+
     }
     
     /**
