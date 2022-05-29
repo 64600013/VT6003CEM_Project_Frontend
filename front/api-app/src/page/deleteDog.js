@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -10,6 +10,26 @@ import deleteDogs from '../images/deleteDogs.png'
 import dogdefault from '../images/dog01.jpg'
 
 export default function DeleteDogs() {
+    // Get the token stored in the browser local storage.
+    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken')
+    const headerTwo = {
+        'Authorization': tokenTwo
+    }
+
+    const urlCheck = "http://localhost:4000/checkToken"
+
+    // Call the GET checkDog API once the page is start loading
+    // Verify if the user have the worker access or not. 
+    // If not then re-route the apge.
+    useEffect(() => {
+        Axios.get(urlCheck, {
+            headers: headerTwo
+        }).then(res => {}).catch(err => {
+            window.location.href = "/"
+            console.log(err)
+        })
+    })
+
     /**
      * @constant dogData
      * @description Data for storing all the relevant dogs records.
@@ -25,12 +45,6 @@ export default function DeleteDogs() {
     // API Path
     const url = "http://localhost:4000/dog/" + data.id
     const urlTwo = "http://localhost:4000/worker/dog/" + data.id
-
-    // Get the token stored in the browser local storage.
-    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken')
-    const headerTwo = {
-        'Authorization': tokenTwo
-    }
 
     /**
      * @function submit

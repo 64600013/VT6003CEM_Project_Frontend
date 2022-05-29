@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -7,6 +7,27 @@ import Axios from 'axios'
 import addDogs from '../images/addDogs.png'
 
 export default function AddDogs() {
+    // Get the token stored in the browser local storage.
+    const token = 'Bearer ' + localStorage.getItem('accessToken')
+    const header = {
+        'Authorization': token
+    }
+
+    const urlCheck = "http://localhost:4000/checkToken"
+
+    // Call the GET checkDog API once the page is start loading
+    // Verify if the user have the worker access or not. 
+    // If not then re-route the apge.
+    useEffect(() => {
+        Axios.get(urlCheck, {
+            headers: header
+        }).then(res => {}).catch(err => {
+            window.location.href = "/"
+            console.log(err)
+        })
+    })
+
+
     /**
      * @constant data 
      * @description Data for storing all the relevant dogs records.
@@ -18,11 +39,6 @@ export default function AddDogs() {
     const url = "http://localhost:4000/dog/"
     var resMsg = ''
 
-    // Get the token stored in the browser local storage.
-    const token = 'Bearer ' + localStorage.getItem('accessToken')
-    const header = {
-        'Authorization': token
-    }
 
     /**
      * @function submit

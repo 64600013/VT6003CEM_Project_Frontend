@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -7,6 +7,31 @@ import Axios from 'axios'
 import checkDogs from '../images/checkDogs.png'
 
 export default function CheckDogs() {
+    // Get the token stored in the browser local storage.
+    const token = 'Bearer ' + localStorage.getItem('accessToken') 
+    const header = {
+        'Authorization': token
+    } 
+    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
+    console.log(tokenTwo)
+    const headerTwo = {
+        'Authorization': tokenTwo
+    } 
+
+    const urlCheck = "http://localhost:4000/checkToken"
+
+    // Call the GET checkDog API once the page is start loading
+    // Verify if the user have the worker access or not. 
+    // If not then re-route the apge.
+    useEffect(() => {
+        Axios.get(urlCheck, {
+            headers: header
+        }).then(res => {}).catch(err => {
+            window.location.href = "/"
+            console.log(err)
+        })
+    })
+
     /**
      * @constant data 
      * @description Data for storing all the relevant dogs records.
@@ -25,17 +50,6 @@ export default function CheckDogs() {
     // API url to call
     const url = "http://localhost:4000/worker/dog/" + data.id
     const urlTwo = "http://localhost:4000/dog/" + dataTwo.id
-
-    // Get the token stored in the browser local storage.
-    const token = 'Bearer ' + localStorage.getItem('accessToken') 
-    const header = {
-        'Authorization': token
-    } 
-    const tokenTwo = 'Bearer ' + localStorage.getItem('accessToken') 
-    console.log(tokenTwo)
-    const headerTwo = {
-        'Authorization': tokenTwo
-    } 
 
 
     /**
