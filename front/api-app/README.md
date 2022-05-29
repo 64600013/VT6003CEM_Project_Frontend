@@ -10,7 +10,7 @@ This script is used to run the react page in the development mode.
 
 Open http://localhost:3000 to view it in your browser once you have completed in setting up project enviroment.
 
-Or wait for the page to be load in autoly.
+Or wait for the page to be load in automaticly for your browser.
 
 # Documentation
 All of the project's code have completed documentation using Jsdoc.
