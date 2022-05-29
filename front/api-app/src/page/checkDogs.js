@@ -14,6 +14,7 @@ export default function CheckDogs() {
      */
     const [data, setData] = useState({id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""})
 
+    const initialState = {id: "", name: "", age: "", sex: "", breed: "", location:"", image: ""}
     /**
      * @constant dataTwo 
      * @description Data for storing all the relevant dogs records.
@@ -52,6 +53,7 @@ export default function CheckDogs() {
 
         // This calls the get API and try to retrive the data.
         Axios.get(url,{id: data.id, headers: header}).then(res => {
+            setData(initialState)
             setData(res.data)
             console.log(data)
             if (res.data !== "undefined"){ 
